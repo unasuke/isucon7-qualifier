@@ -204,7 +204,7 @@ class App < Sinatra::Base
     rows.each do |row|
       r = {}
       r['id'] = row['id']
-      r['user'] = { display_name: row['display_name'], avatar_icon: row['avatar_icon'], name: row['user_name'] }
+      r['user'] = { 'display_name' => row['display_name'], 'avatar_icon' => row['avatar_icon'], 'name' => row['user_name'] }
       r['date'] = row['created_at'].strftime("%Y/%m/%d %H:%M:%S")
       r['content'] = row['content']
       @messages << r
