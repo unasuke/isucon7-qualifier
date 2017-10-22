@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # $1 -> deployment branch
 branch=$1
 app_server_1='27.133.154.88'
