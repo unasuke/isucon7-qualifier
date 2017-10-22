@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bundle install --path vendor/bundle
+/home/isucon/local/ruby/bin/bundle install --path vendor/bundle
