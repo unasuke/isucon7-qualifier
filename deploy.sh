@@ -8,12 +8,12 @@ db_server='153.125.224.140'
 
 # $1 -> server IP addr
 deploy_application() {
-  echo ssh -i deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/application.sh $2\""
+  echo ssh -i deploy/deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/application.sh $2\""
 }
 
 # $1 -> server IP addr
 deploy_database() {
-  echo ssh -i deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/database.sh $2\""
+  echo ssh -i deploy/deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/database.sh $2\""
 }
 
 echo deploy branch $branch to application server $app_server_1 ...
