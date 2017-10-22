@@ -6,6 +6,7 @@ class App < Sinatra::Base
   configure do
     set :session_secret, 'tonymoris'
     set :public_folder, File.expand_path('../../public', __FILE__)
+    set :icons_folder, "#{settings.public_folder}/icons"
     set :avatar_max_size, 1 * 1024 * 1024
 
     enable :sessions
@@ -39,6 +40,11 @@ class App < Sinatra::Base
     db.query("DELETE FROM channel WHERE id > 10")
     db.query("DELETE FROM message WHERE id > 10000")
     db.query("DELETE FROM haveread")
+
+    db.query('select name, data from image').to_a.each do |image|
+      File.write("#{settings.icons_folder}/#{image['name']}", image['data'])
+    end
+
     204
   end
 
@@ -303,9 +309,8 @@ class App < Sinatra::Base
     end
 
     if !avatar_name.nil? && !avatar_data.nil?
-      statement = db.prepare('INSERT INTO image (name, data) VALUES (?, ?)')
-      statement.execute(avatar_name, avatar_data)
-      statement.close
+      File.write("#{settings.icons_folder}/#{avatar_name}", avatar_data)
+
       statement = db.prepare('UPDATE user SET avatar_icon = ? WHERE id = ?')
       statement.execute(avatar_name, user['id'])
       statement.close
@@ -318,20 +323,6 @@ class App < Sinatra::Base
     end
 
     redirect '/', 303
-  end
-
-  get '/icons/:file_name' do
-    file_name = params[:file_name]
-    statement = db.prepare('SELECT * FROM image WHERE name = ?')
-    row = statement.execute(file_name).first
-    statement.close
-    ext = file_name.include?('.') ? File.extname(file_name) : ''
-    mime = ext2mime(ext)
-    if !row.nil? && !mime.empty?
-      content_type mime
-      return row['data']
-    end
-    404
   end
 
   private
