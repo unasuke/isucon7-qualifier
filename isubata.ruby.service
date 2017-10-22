@@ -5,7 +5,7 @@ Description = isucon7 qualifier main application in ruby
 WorkingDirectory=/home/isucon/isubata/webapp/ruby
 EnvironmentFile=/home/isucon/env.sh
 
-ExecStart = /home/isucon/local/ruby/bin/bundle exec puma -p 5000 -t 10 -b unix:/tmp/puma.sock
+ExecStart = /home/isucon/local/ruby/bin/bundle exec puma -p 5000 -t 10
 
 Restart   = always
 Type      = simple
