@@ -8,19 +8,12 @@ db_server='153.125.224.140'
 
 # $1 -> server IP addr
 deploy_application() {
-  ssh -i deploy_id_rsa isucon@$1
-  git fetch origin $2
-  git checkout origin/$2
-  sudo systemctl restart isubata.ruby.service
-  sudo systemctl restart nginx.service
+  echo ssh -i deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/application.sh $2\""
 }
 
 # $1 -> server IP addr
 deploy_database() {
-  ssh -i deploy_id_rsa isucon@$1
-  git fetch origin $2
-  git checkout origin/$2
-  sudo systemctl restart mysql.service
+  echo ssh -i deploy_id_rsa isucon@$1 "\"cd /home/isucon/isucon7-qualifier; ./deploy/database.sh $2\""
 }
 
 echo deploy branch $branch to application server $app_server_1 ...
