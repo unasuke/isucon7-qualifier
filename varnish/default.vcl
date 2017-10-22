@@ -18,8 +18,13 @@ backend nginx {
     .port = "8080";
 }
 
-backend puma {
+backend puma1 {
     .host = "127.0.0.1";
+    .port = "5000";
+}
+
+backend puma2 {
+    .host = "192.168.101.2";
     .port = "5000";
 }
 
@@ -34,7 +39,12 @@ sub vcl_recv {
         return (hash);
     }
 
-    set req.backend_hint = puma;
+    if ( req.url ~ "/profile" ) {
+        set req.backend_hint = puma1;
+        return (pass);
+    }
+
+    set req.backend_hint = puma2;
     return (pass);
 }
 
