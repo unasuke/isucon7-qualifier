@@ -3,6 +3,9 @@ require 'mysql2'
 require 'sinatra/base'
 
 class App < Sinatra::Base
+  login_body = File.read(File.join('views', 'login.html'))
+  register_body = File.read(File.join('views', 'register.html'))
+
   configure do
     set :session_secret, 'tonymoris'
     set :public_folder, File.expand_path('../../public', __FILE__)
@@ -66,7 +69,7 @@ class App < Sinatra::Base
   end
 
   get '/register' do
-    erb :register
+    register_body
   end
 
   post '/register' do
@@ -86,7 +89,7 @@ class App < Sinatra::Base
   end
 
   get '/login' do
-    erb :login
+    login_body
   end
 
   post '/login' do
